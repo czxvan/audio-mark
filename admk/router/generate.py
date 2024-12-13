@@ -5,7 +5,8 @@ from fastapi import APIRouter, UploadFile, File, Request
 import torchaudio
 
 from admk.config import UPLOAD, DEFAULT_MARK
-from admk.utils.utils import load_audio, plot_waveform_and_specgram, string_to_tensor, tensor_to_string
+from admk.utils.utils import load_audio, get_figure_base64, get_audio_base64, \
+                             string_to_tensor, tensor_to_string
 from admk.utils.generator import get_watermark, get_watermarked_audio
 
 router = APIRouter()
@@ -23,7 +24,10 @@ def upload(request: Request, file: UploadFile = File(...)):
 
     request.session['audio_path'] = audio_path
 
-    return {"audio_path": audio_path}
+    return {
+        "status": "success",
+        "audio_path": audio_path
+    }
 
 
 """
@@ -37,9 +41,12 @@ def generate_audio(request: Request):
     audio_path = request.session['audio_path']
     audio, sr = load_audio(audio_path)
 
-    figure = plot_waveform_and_specgram(audio, sr, title='Original audio')
-    figure.savefig('result/original-audio.png')
-    return {'figure': "original-audio.png"}
+    figure_base64 = get_figure_base64(audio, sr, title='Original audio')
+    audio_base64 = get_audio_base64(audio, sr)
+    return {
+        'figure': figure_base64,
+        'audio': audio_base64
+    }
 
 
 @router.get('/api/generate/watermark/{message_s:path}')
@@ -55,10 +62,11 @@ def generate_watermark(request: Request, message_s):
     message = string_to_tensor(message_s)
     watermark = get_watermark(audio, sr, message)
 
-    figure = plot_waveform_and_specgram(watermark, sr, title='watermark')
-    figure.savefig('result/watermark.png')
+    figure_base64 = get_figure_base64(watermark, sr, title='watermark')
+    audio_base64 = get_audio_base64(watermark, sr)
     return {
-        'figure': "watermark.png",
+        'figure': figure_base64,
+        'audio': audio_base64,
         'message_s': message_s,
         'message': message.squeeze().tolist()
     }
@@ -77,15 +85,12 @@ def generate_watermarked_audio(request: Request, message_s):
     message = string_to_tensor(message_s)
     watermarker_audio = get_watermarked_audio(audio, sr, message)
 
-    figure = plot_waveform_and_specgram(watermarker_audio, sr, title='Watermarked audio')
-    figure.savefig('result/watermarked-audio.png')
-    
-    watermarker_audio_path = 'upload/watermarked-audio.wav'
-    torchaudio.save(watermarker_audio_path, watermarker_audio, sr)
+    figure_base64 = get_figure_base64(watermarker_audio, sr, title='Watermarked audio')
+    audio_base64 = get_audio_base64(watermarker_audio, sr)
 
     return {
-        'figure': "watermarked-audio.png",
-        'watermarked-audio':  watermarker_audio_path,
+        'figure': figure_base64,
+        'audio': audio_base64,
         'message_s': message_s,
         'message': message.squeeze().tolist()
     }

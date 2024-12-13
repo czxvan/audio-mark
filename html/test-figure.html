@@ -1,0 +1,17 @@
+<img id="watermarkImage" alt="Watermark Image" />
+<button id="getFigure">获取图像</button>
+
+<script>
+document.getElementById('getFigure').addEventListener('click', async () => {
+    try {
+        const response = await fetch('http://127.0.0.1:8000/api/test-figure');
+        const data = await response.json();
+
+        // 假设返回的 JSON 结构为 { audio: "data:image/png;base64,..."}
+        document.getElementById('watermarkImage').src = data.figure;
+
+    } catch (error) {
+        console.error('获取图像出错:', error);
+    }
+});
+</script>

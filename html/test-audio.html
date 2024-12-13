@@ -1,0 +1,21 @@
+<audio id="audioPlayer" controls></audio>
+<button id="playAudio">获取音频</button>
+<a id="downloadAudio">下载音频</a>
+
+<script>
+document.getElementById('playAudio').addEventListener('click', async () => {
+    try {
+        const response = await fetch('http://127.0.0.1:8000/api/test-audio');
+        const data = await response.json();
+        
+        // 假设返回的 JSON 结构为 { audio: "data:audio/mp3;base64,..."}
+        document.getElementById('audioPlayer').src = data.audio;
+        link = document.getElementById('downloadAudio');
+        link.href = data.audio;
+        link.download = 'audio.mp3';
+
+    } catch (error) {
+        console.error('获取音频出错:', error);
+    }
+});
+</script>

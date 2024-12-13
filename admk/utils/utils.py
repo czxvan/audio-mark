@@ -1,10 +1,11 @@
 from functools import cache
-import torchaudio
+import io
+import base64
 
 import torch
 from torch import Tensor
+import torchaudio
 import matplotlib.pyplot as plt
-
 
 @cache
 def load_audio(audio_path: str):
@@ -71,3 +72,24 @@ def plot_waveform_and_specgram(waveform, sample_rate, title):
 
     figure.suptitle(f"{title} - Waveform and specgram")
     return figure
+
+def get_figure_base64(waveform, sample_rate, title):
+    figure = plot_waveform_and_specgram(waveform, sample_rate, title)
+    # 使用 BytesIO 将图像保存到内存中
+    img_byte_arr = io.BytesIO()
+    figure.savefig(img_byte_arr, format='png')
+    img_byte_arr.seek(0)  # 将指针移到开始位置
+
+    # 将图像转换为 Base64 编码
+    img_base64 = base64.b64encode(img_byte_arr.getvalue()).decode('utf-8')
+    return f"data:image/png;base64,{img_base64}"
+
+def get_audio_base64(audio: Tensor, sr):
+    # 使用 BytesIO 将音频保存到内存中
+    audio_byte_arr = io.BytesIO()
+    torchaudio.save(audio_byte_arr, audio, sr, format='wav')
+    audio_byte_arr.seek(0)  # 将指针移到开始位置
+
+    # 将音频转换为 Base64 编码
+    audio_base64 = base64.b64encode(audio_byte_arr.getvalue()).decode('utf-8')
+    return f"data:audio/wav;base64,{audio_base64}"

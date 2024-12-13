@@ -5,7 +5,7 @@ from fastapi import APIRouter, UploadFile, File, Request
 from torch import tensor
 
 from admk.config import UPLOAD
-from admk.utils.utils import load_audio, plot_waveform_and_specgram, tensor_to_string
+from admk.utils.utils import load_audio, get_figure_base64, get_audio_base64, tensor_to_string
 from admk.utils.detector import detect_wateramrk, get_pink_noised_audio, get_lowpass_filtered_audio
 
 router = APIRouter()
@@ -23,7 +23,10 @@ def upload(request: Request, file: UploadFile = File(...)):
 
     request.session['watermarked_audio_path'] = audio_path
 
-    return {"audio_path": audio_path}
+    return {
+        "status": "success",
+        "audio_path": audio_path
+    }
 
 
 """
@@ -39,12 +42,13 @@ def detect_audio(request: Request):
 
     result, message = detect_wateramrk(audio, sr)
     message_s = tensor_to_string(message)
-    figure = plot_waveform_and_specgram(audio, sr, title='Potential watermarked audio')
 
-    figure.savefig('result/potential-watermarked-audio.png')
+    figure_base64 = get_figure_base64(audio, sr, title='Potential watermarked audio')
+    audio_base64 = get_audio_base64(audio, sr)
 
     return {
-        'figure': 'potential-watermarked-audio.png',
+        'figure': figure_base64,
+        'audio': audio_base64,
         'result': result,
         'message_s': message_s,
         'message': message.squeeze().tolist()
@@ -60,12 +64,13 @@ def detect_pink_noised_audio(request: Request):
     pink_noised_audio = get_pink_noised_audio(audio)
     result, message = detect_wateramrk(pink_noised_audio, sr)
     message_s = tensor_to_string(message)
-    figure = plot_waveform_and_specgram(pink_noised_audio, sr, title='Audio with pink noise')
+    
+    figure_base64 = get_figure_base64(pink_noised_audio, sr, title='Potential watermarked audio')
+    audio_base64 = get_audio_base64(pink_noised_audio, sr)
 
-    figure.savefig('result/pink-noised-audio.png')
-    print(message)
     return {
-        'figure': "pink-noised-audio.png",
+        'figure': figure_base64,
+        'audio': audio_base64,
         'result': result,
         'message_s': message_s,
         'message': message.squeeze().tolist()
@@ -81,12 +86,13 @@ def detect_lowpass_filtered_audio(request: Request):
     lowpass_filtered_audio = get_lowpass_filtered_audio(audio)
     result, message = detect_wateramrk(lowpass_filtered_audio, sr)
     message_s = tensor_to_string(message)
-    figure = plot_waveform_and_specgram(lowpass_filtered_audio, sr, title='Audio with low pass filtered')
 
-    figure.savefig('result/lowpass-filtered-audio.png')
+    figure_base64 = get_figure_base64(lowpass_filtered_audio, sr, title='Potential watermarked audio')
+    audio_base64 = get_audio_base64(lowpass_filtered_audio, sr)
 
     return {
-        'figure': 'lowpass-filtered-audio.png',
+        'figure': figure_base64,
+        'audio': audio_base64,
         'result': result,
         'message_s': message_s,
         'message': message.squeeze().tolist()
