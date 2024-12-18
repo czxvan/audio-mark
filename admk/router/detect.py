@@ -41,7 +41,7 @@ def upload(request: Request, file: UploadFile = File(...)):
     else:
         audio_path = original_path
 
-    request.session['audio_path'] = audio_path
+    request.session['watermarked_audio_path'] = audio_path
     return {
         "status": "success",
         "audio_path": audio_path

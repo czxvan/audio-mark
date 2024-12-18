@@ -12,7 +12,7 @@ document.getElementById('playAudio').addEventListener('click', async () => {
         document.getElementById('audioPlayer').src = data.audio;
         link = document.getElementById('downloadAudio');
         link.href = data.audio;
-        link.download = 'audio.mp3';
+        link.download = 'audio.wav';
 
     } catch (error) {
         console.error('获取音频出错:', error);
