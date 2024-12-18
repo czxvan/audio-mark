@@ -1,0 +1,35 @@
+{
+  "name": "sakai-nuxt",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "dependencies": {
+    "@nuxt/eslint": "^0.7.2",
+    "@nuxtjs/tailwindcss": "^6.12.2",
+    "@primevue/themes": "^4.2.2",
+    "axios": "^1.7.9",
+    "chart.js": "4.4.6",
+    "d3": "^7.9.0",
+    "eslint": "^9.16.0",
+    "nuxt": "^3.14.159",
+    "primeicons": "^7.0.0",
+    "primevue": "^4.2.2",
+    "tailwindcss-primeui": "^0.3.4",
+    "vue": "latest",
+    "vue-router": "latest"
+  },
+  "devDependencies": {
+    "@primevue/nuxt-module": "^4.2.2",
+    "autoprefixer": "^10.4.19",
+    "nitro-public-module": "^0.1.2",
+    "sass": "^1.81.0"
+  }
+}
