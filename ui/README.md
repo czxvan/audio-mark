@@ -1,4 +1,4 @@
-# Okto-Ui
+# Admk-ui
 
 ## Features
 - **Nuxt 3 Framework**
