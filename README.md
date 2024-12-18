@@ -1,11 +1,13 @@
 # Audio-Mark
 
-## 启动
+## 启动前端
+```shell
+pnpm install
+pnpm run dev
+```
+
+## 启动后端
 ```shell
 pip install -r requirements.txt
 python main.py
 ```
-
-## TODO
-- [x] 将图片返回给前端
-- [x] 将包含水印的音频返回给前端
