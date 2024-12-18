@@ -6,6 +6,8 @@ import torch
 from torch import Tensor
 import torchaudio
 import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.use('Agg')
 
 @cache
 def load_audio(audio_path: str):
