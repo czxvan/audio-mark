@@ -3,3 +3,4 @@ fastapi==0.115.4
 torchaudio==2.5.1
 soundfile==0.12.1
 starlette-session==0.4.3
+pydub==0.25.1

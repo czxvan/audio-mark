@@ -2,7 +2,7 @@ import os
 import shutil
 
 from fastapi import APIRouter, UploadFile, File, Request
-from torch import tensor
+from pydub import AudioSegment
 
 from admk.config import UPLOAD
 from admk.utils.utils import load_audio, get_figure_base64, get_audio_base64, tensor_to_string
@@ -17,12 +17,31 @@ router = APIRouter()
 
 @router.post('/api/detect/upload')
 def upload(request: Request, file: UploadFile = File(...)):
-    audio_path = os.path.join(UPLOAD, file.filename)
-    with open(os.path.join(UPLOAD, file.filename), 'wb') as f:
+    # 保存上传文件
+    original_path = os.path.join(UPLOAD, file.filename)
+    with open(original_path, 'wb') as f:
         shutil.copyfileobj(file.file, f)
 
-    request.session['watermarked_audio_path'] = audio_path
+    # 检查文件格式并转换
+    file_ext = os.path.splitext(file.filename)[1].lower()
+    if file_ext != '.wav':
+        # 构建新的wav文件路径
+        wav_filename = os.path.splitext(file.filename)[0] + '.wav'
+        wav_path = os.path.join(UPLOAD, wav_filename)
+        
+        # 转换为wav格式
+        audio = AudioSegment.from_file(original_path)
+        audio.export(wav_path, format='wav')
+        
+        # 删除原始文件
+        os.remove(original_path)
+        
+        # 更新路径
+        audio_path = wav_path
+    else:
+        audio_path = original_path
 
+    request.session['audio_path'] = audio_path
     return {
         "status": "success",
         "audio_path": audio_path
