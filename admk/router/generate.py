@@ -41,7 +41,7 @@ def generate_audio(request: Request):
     audio_path = request.session['audio_path']
     audio, sr = load_audio(audio_path)
 
-    figure_base64 = get_figure_base64(audio, sr, title='Original audio')
+    figure_base64 = get_figure_base64(audio, sr, title='Original Audio')
     audio_base64 = get_audio_base64(audio, sr)
     return {
         'figure': figure_base64,
@@ -62,7 +62,7 @@ def generate_watermark(request: Request, message_s):
     message = string_to_tensor(message_s)
     watermark = get_watermark(audio, sr, message)
 
-    figure_base64 = get_figure_base64(watermark, sr, title='watermark')
+    figure_base64 = get_figure_base64(watermark, sr, title='Watermark')
     audio_base64 = get_audio_base64(watermark, sr)
     return {
         'figure': figure_base64,
@@ -85,7 +85,7 @@ def generate_watermarked_audio(request: Request, message_s):
     message = string_to_tensor(message_s)
     watermarker_audio = get_watermarked_audio(audio, sr, message)
 
-    figure_base64 = get_figure_base64(watermarker_audio, sr, title='Watermarked audio')
+    figure_base64 = get_figure_base64(watermarker_audio, sr, title='Watermarked Audio')
     audio_base64 = get_audio_base64(watermarker_audio, sr)
 
     return {

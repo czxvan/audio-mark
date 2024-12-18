@@ -43,7 +43,7 @@ def detect_audio(request: Request):
     result, message = detect_wateramrk(audio, sr)
     message_s = tensor_to_string(message)
 
-    figure_base64 = get_figure_base64(audio, sr, title='Potential watermarked audio')
+    figure_base64 = get_figure_base64(audio, sr, title='Potential Watermarked Audio')
     audio_base64 = get_audio_base64(audio, sr)
 
     return {
@@ -65,7 +65,7 @@ def detect_pink_noised_audio(request: Request):
     result, message = detect_wateramrk(pink_noised_audio, sr)
     message_s = tensor_to_string(message)
     
-    figure_base64 = get_figure_base64(pink_noised_audio, sr, title='Potential watermarked audio')
+    figure_base64 = get_figure_base64(pink_noised_audio, sr, title='Pink Noised Audio')
     audio_base64 = get_audio_base64(pink_noised_audio, sr)
 
     return {
@@ -87,7 +87,7 @@ def detect_lowpass_filtered_audio(request: Request):
     result, message = detect_wateramrk(lowpass_filtered_audio, sr)
     message_s = tensor_to_string(message)
 
-    figure_base64 = get_figure_base64(lowpass_filtered_audio, sr, title='Potential watermarked audio')
+    figure_base64 = get_figure_base64(lowpass_filtered_audio, sr, title='Losspass Filtered Audio')
     audio_base64 = get_audio_base64(lowpass_filtered_audio, sr)
 
     return {
