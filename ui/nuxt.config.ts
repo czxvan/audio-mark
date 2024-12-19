@@ -40,5 +40,8 @@ export default defineNuxtConfig({
         public: {
             API_URL: process.env.API_URL || 'http://10.108.25.241:8910'
         }
-    }
+    },
+    app: {
+        keepalive: true
+    },
 })
