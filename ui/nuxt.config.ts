@@ -35,5 +35,10 @@ export default defineNuxtConfig({
                 }
             }
         }
+    },
+    runtimeConfig: {
+        public: {
+            API_URL: process.env.API_URL || 'http://10.108.25.241:8910'
+        }
     }
 })

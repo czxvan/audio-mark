@@ -4,7 +4,7 @@
       ref="fileUpload"
       name="file"
       mode="advanced"
-      url="http://127.0.0.1:8000/api/generate/upload"
+      :url="`${config.public.API_URL}/api/generate/upload`"
       accept=".wav"
       :auto="false"
       :multiple="true"
@@ -42,6 +42,7 @@ import TabMenu from 'primevue/tabmenu';
 import { useToast } from 'primevue/usetoast';
 
 const toast = useToast();
+const config = useRuntimeConfig();
 
 const files = ref([]);
 const fileUpload = ref(null);
@@ -68,7 +69,7 @@ const onUpload = async (event) => {
 
 async function getAudioFigure(url) {
   try {
-    const response = await fetch('http://127.0.0.1:8000'+url,{
+    const response = await fetch(config.public.API_URL + url,{
        credentials: 'include'
     });
     const data = await response.json();

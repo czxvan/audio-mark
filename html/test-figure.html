@@ -4,7 +4,7 @@
 <script>
 document.getElementById('getFigure').addEventListener('click', async () => {
     try {
-        const response = await fetch('http://127.0.0.1:8000/api/test-figure');
+        const response = await fetch('http://127.0.0.1:8910/api/test-figure');
         const data = await response.json();
 
         // 假设返回的 JSON 结构为 { audio: "data:image/png;base64,..."}

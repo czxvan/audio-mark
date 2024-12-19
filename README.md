@@ -1,6 +1,10 @@
 # Audio-Mark
 
 ## 环境配置
+安装ffmpeg
+```shell
+sudo apt install ffmpeg
+```
 创建虚拟环境
 ```shell
 mamba create -n admk python=3.10

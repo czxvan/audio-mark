@@ -1,9 +1,11 @@
 audioseal==0.1.4
-fastapi==0.115.6
-julius==0.2.7
-matplotlib==3.5.1
+fastapi==0.115.4
+matplotlib==3.9.3
 pydub==0.25.1
-starlette==0.42.0
+starlette==0.41.2
 torch==2.5.1
 torchaudio==2.5.1
-uvicorn==0.34.0
+uvicorn==0.32.0
+itsdangerous==2.2.0
+numpy==2.2.0
+python-multipart==0.0.20
