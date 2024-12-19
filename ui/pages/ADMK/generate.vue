@@ -5,7 +5,7 @@
       name="file"
       mode="advanced"
       :url="`${config.public.API_URL}/api/generate/upload`"
-      accept=".wav"
+      accept=".wav, .mp3"
       :auto="false"
       :multiple="true"
       :with-credentials="true"
