@@ -25,10 +25,18 @@ pnpm env use --global lts
 ```
 
 ## 启动前端
+设置后端host
+```shell
+export API_URL="http://127.0.0.1:8910"
+```
+启动
 ```shell
 cd ui/
 pnpm install
-pnpm run dev
+
+pnpm run dev --host 127.0.0.1
+或
+pnpm run dev --host 0.0.0.0
 ```
 
 ## 启动后端
