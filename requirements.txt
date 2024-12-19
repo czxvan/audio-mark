@@ -1,6 +1,9 @@
 audioseal==0.1.4
-fastapi==0.115.4
-torchaudio==2.5.1
-soundfile==0.12.1
-starlette-session==0.4.3
+fastapi==0.115.6
+julius==0.2.7
+matplotlib==3.5.1
 pydub==0.25.1
+starlette==0.42.0
+torch==2.5.1
+torchaudio==2.5.1
+uvicorn==0.34.0
