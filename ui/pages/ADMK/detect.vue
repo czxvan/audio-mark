@@ -4,7 +4,7 @@
     name="file"
     mode="advanced"
     :url="`${config.public.API_URL}/api/detect/upload`"
-    accept=".wav"
+    accept=".wav, .mp3"
     :auto="false"
     :multiple="true"
     :with-credentials="true"
