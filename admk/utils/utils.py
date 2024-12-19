@@ -11,12 +11,9 @@ matplotlib.use('Agg')
 
 @cache
 def load_audio(audio_path: str):
-    if audio_path.endswith('.mp3'):
-        audio, sr = torchaudio.load(audio_path, backend='sox')
-    elif audio_path.endswith('.wav'):
-        audio, sr = torchaudio.load(audio_path)
-    else:
-        raise Exception()
+    audio, sr = torchaudio.load(audio_path)
+    if audio.size(0) > 1:
+        audio = audio.mean(dim=0, keepdim=True)
     return audio, sr
 
 
